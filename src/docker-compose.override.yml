@@ -1,0 +1,44 @@
+services:
+  blocks.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "6080:8080"
+      - "6081:8081"
+    depends_on:
+      - blocks.db
+      - blocks.redis
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  blocks.importer:
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  blocks.db:
+    container_name: blocksdb
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=IcTestBlocks
+    restart: always
+    ports:
+        - "6432:5432"       
+    volumes:
+      - blocks_db:/var/lib/postgresql/data 
+
+  blocks.redis:
+    container_name: blocksredis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - blocks_redis:/data/  

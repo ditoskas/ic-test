@@ -1,0 +1,23 @@
+services:
+  blocks.api:
+    image: ${DOCKER_REGISTRY-}blocksapi
+    build:
+      context: .
+      dockerfile: Services/Cryptos/Blocks.Api/Dockerfile
+
+  blocks.importer:
+    image: ${DOCKER_REGISTRY-}blocksimporter
+    build:
+      context: .
+      dockerfile: Services/Cryptos/Blocks.Importer/Dockerfile
+
+  blocks.db:
+    image: postgres:15
+
+  blocks.redis:
+    image: redis:7-alpine
+
+volumes:
+  blocks_db:
+  blocks_redis:
+
