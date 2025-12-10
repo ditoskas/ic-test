@@ -1,4 +1,4 @@
-﻿using IcTest.Abstractions.BackgroundServices;
+﻿using IcTest.Shared.BackgroundServices;
 using IcTest.Shared.Constants;
 using Microsoft.Extensions.Hosting;
 

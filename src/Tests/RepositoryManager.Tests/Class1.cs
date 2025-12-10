@@ -1,4 +1,4 @@
-﻿namespace IcTest.Abstractions
+﻿namespace RepositoryManager.Tests
 {
     public class Class1
     {

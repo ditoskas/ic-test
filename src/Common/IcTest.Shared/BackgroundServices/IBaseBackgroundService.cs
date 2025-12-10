@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 
-namespace IcTest.Abstractions.BackgroundServices
+namespace IcTest.Shared.BackgroundServices
 {
     public interface IBaseBackgroundService : IHostedService
     {

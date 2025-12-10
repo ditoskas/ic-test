@@ -1,5 +1,5 @@
-﻿using System.Text.Json;
-using IcTest.Abstractions.Models;
+﻿using IcTest.Shared.Models.Contracts;
+using System.Text.Json;
 
 namespace IcTest.Shared.Models
 {

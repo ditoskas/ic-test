@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\IcTest.Shared\IcTest.Shared.csproj" />
-    <ProjectReference Include="..\IcTest.Abstractions\IcTest.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

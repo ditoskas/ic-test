@@ -1,4 +1,4 @@
-﻿namespace IcTest.Abstractions.Models
+﻿namespace IcTest.Shared.Models.Contracts
 {
     public interface IEntityWithTimestamps : IEntity
     {

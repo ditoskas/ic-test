@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using IcTest.Shared.Models.Contracts;
 using System.ComponentModel.DataAnnotations;
-using IcTest.Abstractions.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IcTest.Shared.Models
 {

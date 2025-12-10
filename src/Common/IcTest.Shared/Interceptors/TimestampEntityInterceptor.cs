@@ -1,4 +1,4 @@
-﻿using IcTest.Abstractions.Models;
+﻿using IcTest.Shared.Models.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
