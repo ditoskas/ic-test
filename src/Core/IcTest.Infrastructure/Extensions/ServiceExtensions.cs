@@ -1,16 +1,84 @@
-﻿using IcTest.Infrastructure.Repositories.CryptoRepositories;
+﻿using Carter;
+using FluentValidation;
+using IcTest.Infrastructure.Repositories.CryptoRepositories;
 using IcTest.Infrastructure.Repositories.CryptoRepositories.Contacts;
+using IcTest.Shared.Behaviors;
 using IcTest.Shared.Interceptors;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
+using System.Reflection;
 
 namespace IcTest.Infrastructure.Extensions
 {
     public static class ServiceExtensions
     {
+        /// <summary>
+        /// Dependency injection for MediatR with assemblies
+        /// example:
+        /// var module1 = typeof(Module1Service).Assembly;
+        /// var module2 = typeof(Module2Service).Assembly;
+        /// var module3 = typeof(Module3Service).Assembly;
+        /// builder.Services.AddMediatRWithAssemblies(module1, module2, module3);
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="assemblies"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddMediatRWithAssemblies(this IServiceCollection services, params Assembly[] assemblies)
+        {
+            services.AddMediatR(config =>
+            {
+                config.RegisterServicesFromAssemblies(assemblies);
+                config.AddOpenBehavior(typeof(LoggingBehavior<,>));
+                config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+            });
+
+            services.AddValidatorsFromAssemblies(assemblies);
+            //Configure route handler to throw exceptions in order to be received by the middleware
+            services.Configure<RouteHandlerOptions>(o =>
+            {
+                o.ThrowOnBadRequest = true;
+            });
+            return services;
+        }
+
+        /// <summary>
+        /// Add carter with assemblies
+        /// example:
+        /// var module1 = typeof(Module1Service).Assembly;
+        /// var module2 = typeof(Module2Service).Assembly;
+        /// var module3 = typeof(Module3Service).Assembly;
+        /// builder.Services.AddCarterWithAssemblies(module1, module2, module3);
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="assemblies"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddCarterWithAssemblies(this IServiceCollection services, params Assembly[] assemblies)
+        {
+            services.AddCarter(configurator: config =>
+            {
+                foreach (var assembly in assemblies)
+                {
+                    var modules = assembly.GetTypes()
+                        .Where(t => t.IsAssignableTo(typeof(ICarterModule))).ToArray();
+
+                    config.WithModules(modules);
+                }
+            });
+
+
+            return services;
+        }
+
+        /// <summary>
+        /// Add Crypto Database Services
+        /// </summary>
+        /// <param name="services"></param>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
         public static IServiceCollection AddCryptoDatabaseServices(this IServiceCollection services, IConfiguration configuration)
         {
             // Configure Npgsql to enable dynamic JSON serialization

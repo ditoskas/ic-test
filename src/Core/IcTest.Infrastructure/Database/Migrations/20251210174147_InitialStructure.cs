@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IcTest.Infrastructure.Database.Migrations
 {
     /// <inheritdoc />
-    public partial class AddInitialStructure : Migration
+    public partial class InitialStructure : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -37,7 +37,7 @@ namespace IcTest.Infrastructure.Database.Migrations
                     Hash = table.Column<string>(type: "character varying(512)", maxLength: 512, nullable: false),
                     Height = table.Column<int>(type: "integer", nullable: false),
                     Chain = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: false),
-                    Total = table.Column<long>(type: "bigint", nullable: false),
+                    Total = table.Column<decimal>(type: "numeric", nullable: false),
                     Fees = table.Column<long>(type: "bigint", nullable: false),
                     Size = table.Column<int>(type: "integer", nullable: true),
                     Vsize = table.Column<int>(type: "integer", nullable: true),

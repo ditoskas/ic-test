@@ -20,15 +20,15 @@ namespace BlockCypher.Client
         }
 
         #region Public Methods
-        public async Task<BlockCypherChain?> GetBlockCypherChain(string chain, string network = "main", CancellationToken cancellationToken = default)
+        public async Task<BlockCypherChain?> GetBlockCypherChain(string coin, string chain = "main", CancellationToken cancellationToken = default)
         {
-            string path = string.Format(BlockCypherEndPoints.ChainInfo, chain, network);
+            string path = string.Format(BlockCypherEndPoints.ChainInfo, coin, chain);
             return await Execute<BlockCypherChain>(path, HttpMethod.Get, null, cancellationToken);
         }
 
-        public async Task<BlockCypherBlockHash?> GetBlockHash(string hash, string chain, string network = "main", CancellationToken cancellationToken = default)
+        public async Task<BlockCypherBlockHash?> GetBlockHash(string hash, string coin, string chain = "main", CancellationToken cancellationToken = default)
         {
-            string path = string.Format(BlockCypherEndPoints.BlockByHash, chain, network, hash);
+            string path = string.Format(BlockCypherEndPoints.BlockByHash, coin, chain, hash);
             return await Execute<BlockCypherBlockHash>(path, HttpMethod.Get, null, cancellationToken);
         }
         #endregion

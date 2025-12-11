@@ -131,8 +131,8 @@ namespace IcTest.Infrastructure.Database.Migrations
                     b.Property<DateTime>("Time")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("Total")
-                        .HasColumnType("bigint");
+                    b.Property<decimal>("Total")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("TxUrl")
                         .IsRequired()

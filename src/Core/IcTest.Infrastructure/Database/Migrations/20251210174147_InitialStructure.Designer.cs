@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IcTest.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(CryptoDbContext))]
-    [Migration("20251210120721_AddInitialStructure")]
-    partial class AddInitialStructure
+    [Migration("20251210174147_InitialStructure")]
+    partial class InitialStructure
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -134,8 +134,8 @@ namespace IcTest.Infrastructure.Database.Migrations
                     b.Property<DateTime>("Time")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<long>("Total")
-                        .HasColumnType("bigint");
+                    b.Property<decimal>("Total")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("TxUrl")
                         .IsRequired()

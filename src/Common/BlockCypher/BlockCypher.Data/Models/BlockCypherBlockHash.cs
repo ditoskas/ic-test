@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -14,7 +15,7 @@ namespace BlockCypher.Data.Models
         [JsonPropertyName("chain")]
         public required string Chain { get; set; }
         [JsonPropertyName("total")]
-        public long Total { get; set; }
+        public decimal Total { get; set; }
         [JsonPropertyName("fees")]
         public long Fees { get; set; }
         [JsonPropertyName("size")]

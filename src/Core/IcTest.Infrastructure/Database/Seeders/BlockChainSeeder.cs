@@ -19,7 +19,7 @@ namespace IcTest.Infrastructure.Database.Seeders
             }
         }
 
-        private static readonly List<BlockChain> BlockChainsToAdd =
+        public static readonly List<BlockChain> BlockChainsToAdd =
         [
             new BlockChain
             {

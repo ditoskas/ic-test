@@ -1,24 +1,35 @@
 using Blocks.Api.Extensions;
+using Carter;
+using HealthChecks.UI.Client;
 using IcTest.Infrastructure.Extensions;
+using IcTest.Shared.Exceptions.Handlers;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
-
-//Add Services
-builder.Services.AddCryptoDatabaseServices(builder.Configuration);
+builder.Services.AddSwaggerServices();
+builder.Services.AddHandlersAndServices(builder.Configuration);
+builder.Services.AddCorsPolicies();
+builder.Services.AddCarterAndMediatR();
+builder.Services.AddSystemHealthChecks(builder.Configuration);
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+builder.Services.RegisterCustomMapsterConfiguration();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
+app.UseSwaggerPipeline();
+app.UseCors("AllowAll");
 app.UseHttpsRedirection();
+app.UseHealthChecks("/health",
+    new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
+// Map Carter module endpoints
+app.MapCarter();
+
+app.UseExceptionHandler(options => { });
 
 //Initialise Database
 await app.InitialiseDatabaseAsync();

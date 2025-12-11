@@ -1,6 +1,4 @@
-﻿using AmegaCore.Pagination;
-
-namespace AmegaCore.ApiResponses
+﻿namespace IcTest.Shared.ApiResponses
 {
     public class ApiPaginatedResponse<T>(PaginatedResult<T> payload) :ApiResponse<PaginatedResult<T>>(payload)
     {

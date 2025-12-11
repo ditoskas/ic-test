@@ -21,7 +21,7 @@ namespace BlockCypher.Tests
             ServiceCollection services = new ServiceCollection();
             BlockCypherConfig blockCypherConfig = Config.GetSection("BlockCypher").Get<BlockCypherConfig>()!;
 
-            services.AddBlockCypherHttpClient(blockCypherConfig);
+            services.AddBlockCypherServices(blockCypherConfig);
             ServiceProvider = services.BuildServiceProvider();
         }
     }

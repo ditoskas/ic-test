@@ -16,7 +16,7 @@ namespace BlockCypher.Tests
 
         public static BlockCypherBlockHash BtcBlockHash = new BlockCypherBlockHash()
         {
-            Hash = "00000000000000000003dc20b868d17121303308f6bba329302e75913f0790db",
+            Hash = "000000000000000000bf56ff4a81e399374a68344a64d6681039412de78366b8",
             Chain = "BTC.main",
             Height = 671142,
             Nonce = 3270005482

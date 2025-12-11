@@ -1,4 +1,5 @@
 ﻿using IcTest.Shared.Models;
+using System.Numerics;
 
 namespace IcTest.Data.Models
 {
@@ -7,7 +8,7 @@ namespace IcTest.Data.Models
         public required string Hash { get; set; }
         public int Height { get; set; }
         public required string Chain { get; set; }
-        public long Total { get; set; }
+        public decimal Total { get; set; }
         public long Fees { get; set; }
         public int? Size { get; set; }
         public int? Vsize { get; set; }
