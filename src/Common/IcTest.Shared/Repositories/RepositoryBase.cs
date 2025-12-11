@@ -5,7 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using IcTest.Shared.ApiResponses;
+using Mapster;
 
 namespace IcTest.Shared.Repositories
 {
@@ -78,9 +81,25 @@ namespace IcTest.Shared.Repositories
             return FindByCondition(c => EF.Property<long>(c, "Id") == id, trackChanges).FirstOrDefault();
         }
 
-        public async Task<T?> GetByIdAsync(long id, bool trackChanges)
+        public async Task<T?> GetByIdAsync(long id, bool trackChanges, CancellationToken cnt = default)
         {
-            return await FindByCondition(c => EF.Property<long>(c, "Id") == id, trackChanges).FirstOrDefaultAsync();
+            return await FindByCondition(c => EF.Property<long>(c, "Id") == id, trackChanges).FirstOrDefaultAsync(cnt);
+        }
+
+        public async Task<List<T>> GetPagedListAsync(IQueryable<T> query, int pageNumber, int pageSize, CancellationToken cnt = default)
+        {
+            return await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync(cnt).ConfigureAwait(false);
+        }
+
+        public async Task<PaginatedResult<TDto>> GetPaginateResultListAsync<TDto>(IQueryable<T> query, int pageNumber,
+            int pageSize, CancellationToken cnt = default)
+        {
+
+            int totalRecords = await query.CountAsync(cnt).ConfigureAwait(false);
+            int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+            List<T> payload = await GetPagedListAsync(query, pageNumber, pageSize, cnt);
+            List<TDto> dtoList = payload.Adapt<List<TDto>>();
+            return new PaginatedResult<TDto>(pageNumber, pageSize, totalPages, dtoList);
         }
         #endregion
     }

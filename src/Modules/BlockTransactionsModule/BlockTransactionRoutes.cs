@@ -1,5 +1,6 @@
 ﻿using BlockTransactionsModule.Features.GetTransaction;
 using Carter;
+using IcTest.Shared.Constants;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -12,10 +13,19 @@ namespace BlockTransactionsModule
     {
         public void AddRoutes(IEndpointRouteBuilder builder)
         {
-            builder.MapGet(BlockTransactionUrls.BlockTransactionsHistory,
-                async ([FromRoute] string coinId, [FromRoute] string chainId, ISender sender) =>
+            builder.MapGet(
+                BlockTransactionUrls.BlockTransactionsHistory,
+                async (
+                    [FromRoute] string coinId,
+                    [FromRoute] string chainId,
+                    [FromQuery] int? page,
+                    [FromQuery] int? pageSize,
+                    ISender sender) =>
                 {
-                    return await sender.Send(new GetTransactionQuery(coinId, null, 1, 10));
+                    int currentPage = page.GetValueOrDefault(PaginationDefaults.DefaultPageNumber);
+                    int currentPageSize = pageSize.GetValueOrDefault(PaginationDefaults.DefaultPageSize);
+
+                    return await sender.Send(new GetTransactionQuery(coinId, chainId, currentPage, currentPageSize));
                 })
                 .WithName("GetTransactionHistory")
                 .Produces<GetTransactionResult>(StatusCodes.Status200OK)

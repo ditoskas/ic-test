@@ -1,5 +1,4 @@
 ﻿using IcTest.Shared.Models;
-using System.Numerics;
 
 namespace IcTest.Data.Models
 {

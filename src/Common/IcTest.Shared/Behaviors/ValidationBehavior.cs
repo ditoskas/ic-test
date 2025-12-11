@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
-using IcTest.Shared.CQRS;
 using MediatR;
 
 namespace IcTest.Shared.Behaviors

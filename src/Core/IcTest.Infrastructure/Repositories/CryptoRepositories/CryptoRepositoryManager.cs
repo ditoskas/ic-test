@@ -1,11 +1,10 @@
 ﻿using IcTest.Infrastructure.Repositories.CryptoRepositories.Contacts;
-using Microsoft.EntityFrameworkCore;
 
 namespace IcTest.Infrastructure.Repositories.CryptoRepositories
 {
     public class CryptoRepositoryManager : ICryptoRepositoryManager
     {
-        public CryptoDbContext CryptoDbContext { get; }
+        protected CryptoDbContext CryptoDbContext { get; }
         #region Private Repos
         private readonly Lazy<IBlockChainRepository> _blockChainRepository;
         private readonly Lazy<IBlockHashRepository> _blockHashRepository;

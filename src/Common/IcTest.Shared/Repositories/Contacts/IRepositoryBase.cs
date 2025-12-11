@@ -20,7 +20,11 @@ namespace IcTest.Shared.Repositories.Contacts
 
         #region Getters
         T? GetById(long id, bool trackChanges);
-        Task<T?> GetByIdAsync(long id, bool trackChanges);
+        Task<T?> GetByIdAsync(long id, bool trackChanges, CancellationToken cnt = default);
+
+        Task<List<T>> GetPagedListAsync(IQueryable<T> query, int pageNumber, int pageSize,
+            CancellationToken cnt = default);
+
         #endregion
     }
 }
