@@ -2,6 +2,7 @@
 {
     public abstract class BlockTransactionUrls
     {
-        public const string BlockTransactionsHistory = "/blocks/transactions/{coinId}/{chainId}";
+        public const string CryptoTransactionsHistory = "/crypto/transactions/{coinId}/{chainId}";
+        public const string CryptoChains = "/crypto/chains";
     }
 }

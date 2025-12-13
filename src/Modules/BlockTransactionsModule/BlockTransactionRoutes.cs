@@ -1,4 +1,5 @@
-﻿using BlockTransactionsModule.Features.GetTransaction;
+﻿using BlockTransactionsModule.Features.GetChains;
+using BlockTransactionsModule.Features.GetTransaction;
 using Carter;
 using IcTest.Shared.Constants;
 using MediatR;
@@ -14,7 +15,7 @@ namespace BlockTransactionsModule
         public void AddRoutes(IEndpointRouteBuilder builder)
         {
             builder.MapGet(
-                BlockTransactionUrls.BlockTransactionsHistory,
+                BlockTransactionUrls.CryptoTransactionsHistory,
                 async (
                     [FromRoute] string coinId,
                     [FromRoute] string chainId,
@@ -31,6 +32,14 @@ namespace BlockTransactionsModule
                 .Produces<GetTransactionResult>(StatusCodes.Status200OK)
                 .WithSummary("Get transaction history")
                 .WithDescription("Get transaction history");
+
+            builder.MapGet(
+                    BlockTransactionUrls.CryptoChains,
+                    async (ISender sender) => await sender.Send(new GetChainsQuery()))
+                .WithName("GetBlockChains")
+                .Produces<GetChainsResult>(StatusCodes.Status200OK)
+                .WithSummary("Get available block chains")
+                .WithDescription("Get available block chains");
         }
     }
 }
