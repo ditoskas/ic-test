@@ -3,6 +3,7 @@ using IcTest.Data.Models;
 using IcTest.Infrastructure.Repositories.CryptoRepositories.Contacts;
 using IcTest.Shared.ApiResponses;
 using IcTest.Shared.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace IcTest.Infrastructure.Repositories.CryptoRepositories
 {
@@ -15,6 +16,13 @@ namespace IcTest.Infrastructure.Repositories.CryptoRepositories
                                             .OrderByDescending(bh => bh.CreatedAt);
 
             return await GetPaginateResultListAsync<BlockHashDto>(query, pageNumber, pageSize, cancellationToken);
+        }
+
+        public async Task<BlockHash?> GetLastHashAsync(string chain, bool trackChanges = false, CancellationToken cancellationToken = default)
+        {
+            return await FindByCondition(bh => bh.Chain == chain, trackChanges)
+                         .OrderByDescending(bh => bh.CreatedAt)
+                         .FirstOrDefaultAsync(cancellationToken);
         }
     }
 }

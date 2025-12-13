@@ -15,6 +15,13 @@ builder.Services.AddCarterAndMediatR();
 builder.Services.AddSystemHealthChecks(builder.Configuration);
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.RegisterCustomMapsterConfiguration();
+builder.Services.AddOpenTelemetryWithMetrics(builder.Environment.ApplicationName);
+// Configure OpenTelemetry Logging
+builder.Logging.AddOpenTelemetry(logging =>
+{
+    logging.IncludeFormattedMessage = true;
+    logging.IncludeScopes = true;
+});
 
 var app = builder.Build();
 

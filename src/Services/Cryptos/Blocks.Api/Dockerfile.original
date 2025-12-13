@@ -13,12 +13,6 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Services/Cryptos/Blocks.Api/Blocks.Api.csproj", "Services/Cryptos/Blocks.Api/"]
-COPY ["Core/IcTest.Infrastructure/IcTest.Infrastructure.csproj", "Core/IcTest.Infrastructure/"]
-COPY ["Common/BlockCypher/BlockCypher.Client/BlockCypher.Client.csproj", "Common/BlockCypher/BlockCypher.Client/"]
-COPY ["Common/BlockCypher/BlockCypher.Data/BlockCypher.Data.csproj", "Common/BlockCypher/BlockCypher.Data/"]
-COPY ["Core/IcTest.Data/IcTest.Data.csproj", "Core/IcTest.Data/"]
-COPY ["Common/IcTest.Shared/IcTest.Shared.csproj", "Common/IcTest.Shared/"]
-COPY ["Modules/BlockTransactionsModule/BlockTransactionsModule.csproj", "Modules/BlockTransactionsModule/"]
 RUN dotnet restore "./Services/Cryptos/Blocks.Api/Blocks.Api.csproj"
 COPY . .
 WORKDIR "/src/Services/Cryptos/Blocks.Api"

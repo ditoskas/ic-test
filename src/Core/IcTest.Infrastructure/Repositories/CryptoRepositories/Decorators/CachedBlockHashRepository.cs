@@ -22,5 +22,15 @@ namespace IcTest.Infrastructure.Repositories.CryptoRepositories.Decorators
 
             return result;
         }
+
+        public async Task<BlockHash?> GetLastHashAsync(string chain, bool trackChanges = false,
+            CancellationToken cancellationToken = default)
+        {
+            string cacheKey = RedisService.BuildRedisKeyFromParameters(BuildMethodCacheKey(), chain, trackChanges);
+            TimeSpan? expiryTime = DefaultCacheTimeInMinutes.HasValue ? TimeSpan.FromMinutes(DefaultCacheTimeInMinutes.Value) : null;
+            BlockHash? result = await cacheService.GetOrSetDataAsync(cacheKey, () => innerRepository.GetLastHashAsync(chain, trackChanges), expiryTime);
+
+            return result;
+        }
     }
 }

@@ -2,6 +2,9 @@
 using BlockCypher.Data.Config;
 using IcTest.Infrastructure.Extensions;
 using System.Reflection;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 namespace Blocks.Api.Extensions
 {
@@ -61,6 +64,24 @@ namespace Blocks.Api.Extensions
             services.AddHealthChecks()
                 .AddNpgSql(configuration.GetConnectionString("CryptoDatabase") ?? string.Empty)
                 .AddRedis(configuration.GetConnectionString("CryptoRedis") ?? string.Empty);
+            return services;
+        }
+
+        public static IServiceCollection AddOpenTelemetryWithMetrics(this IServiceCollection services,
+            string applicationName)
+        {
+            services.AddOpenTelemetry()
+                .ConfigureResource(resource => resource.AddService(applicationName))
+                .WithMetrics(metrics =>
+                {
+                    metrics.AddAspNetCoreInstrumentation();
+                    metrics.AddHttpClientInstrumentation();
+                })
+                .WithTracing(tracing =>
+                {
+                    tracing.AddAspNetCoreInstrumentation();
+                    tracing.AddHttpClientInstrumentation();
+                });
             return services;
         }
     }

@@ -18,10 +18,21 @@ services:
 
   blocks.importer:
     environment:
-      - DOTNET_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+    ports:
+      - "7080:8080"
+      - "7081:8081"
+    depends_on:
+      - blocks.db
+      - blocks.redis
+      - blocks.api # to ensure api is started before importer for the migrations
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
   blocks.db:
     container_name: blocksdb

@@ -1,7 +1,22 @@
-using Blocks.Importer;
+using Blocks.Importer.Extensions;
+using HealthChecks.UI.Client;
+using IcTest.Infrastructure.Extensions;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
-var builder = Host.CreateApplicationBuilder(args);
-builder.Services.AddHostedService<Worker>();
+var builder = WebApplication.CreateBuilder(args);
 
-var host = builder.Build();
-host.Run();
+// Add services to the container.
+builder.Services.AddHandlersAndServices(builder.Configuration);
+builder.Services.AddSystemHealthChecks(builder.Configuration);
+builder.Services.RegisterCustomMapsterConfiguration();
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+app.UseHttpsRedirection();
+app.UseHealthChecks("/health",
+    new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
+app.Run();
+

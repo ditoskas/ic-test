@@ -10,5 +10,8 @@ namespace IcTest.Infrastructure.Repositories.CryptoRepositories.Contacts
         Task<PaginatedResult<BlockHashDto>> GetHistoryAsync(string chain, int pageNumber, int pageSize,
             bool trackChanges = false,
             CancellationToken cancellationToken = default);
+
+        Task<BlockHash?> GetLastHashAsync(string chain, bool trackChanges = false,
+            CancellationToken cancellationToken = default);
     }
 }
