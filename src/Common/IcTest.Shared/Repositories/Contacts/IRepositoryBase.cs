@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using IcTest.Shared.ApiResponses;
+using System.Linq.Expressions;
 
 namespace IcTest.Shared.Repositories.Contacts
 {
@@ -24,6 +25,9 @@ namespace IcTest.Shared.Repositories.Contacts
 
         Task<List<T>> GetPagedListAsync(IQueryable<T> query, int pageNumber, int pageSize,
             CancellationToken cnt = default);
+
+        Task<PaginatedResult<TDto>> GetPaginateResultListAsync<TDto>(IQueryable<T> query, int pageNumber,
+            int pageSize, CancellationToken cnt = default);
 
         #endregion
     }

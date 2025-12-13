@@ -20,9 +20,10 @@ namespace Blocks.Api.Extensions
 
         public static IServiceCollection AddHandlersAndServices(this IServiceCollection services, IConfiguration configuration)
         {
-            //Services
+            //Cache
+            services.AddRedis(configuration);
+            //Database
             services.AddCryptoDatabaseServices(configuration);
-
             //Handlers
             BlockCypherConfig blockCypherConfig = configuration.GetSection("BlockCypher").Get<BlockCypherConfig>()!;
             services.AddBlockCypherServices(blockCypherConfig);
@@ -58,7 +59,8 @@ namespace Blocks.Api.Extensions
         public static IServiceCollection AddSystemHealthChecks(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddHealthChecks()
-                .AddNpgSql(configuration.GetConnectionString("CryptoDatabase") ?? "");
+                .AddNpgSql(configuration.GetConnectionString("CryptoDatabase") ?? string.Empty)
+                .AddRedis(configuration.GetConnectionString("CryptoRedis") ?? string.Empty);
             return services;
         }
     }

@@ -2,6 +2,8 @@
 using FluentValidation;
 using IcTest.Infrastructure.Repositories.CryptoRepositories;
 using IcTest.Infrastructure.Repositories.CryptoRepositories.Contacts;
+using IcTest.Infrastructure.Repositories.CryptoRepositories.Decorators;
+using IcTest.Infrastructure.Services.Cache;
 using IcTest.Shared.Behaviors;
 using IcTest.Shared.Interceptors;
 using Microsoft.AspNetCore.Routing;
@@ -10,12 +12,29 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
+using StackExchange.Redis;
 using System.Reflection;
+using IDatabase = StackExchange.Redis.IDatabase;
 
 namespace IcTest.Infrastructure.Extensions
 {
     public static class ServiceExtensions
     {
+        public static IServiceCollection AddRedis(this IServiceCollection services, IConfiguration configuration)
+        {
+            string connectionString = configuration.GetConnectionString("CryptoRedis") ?? throw new InvalidOperationException("CryptoRedis connection string is not configured.");
+            services.AddSingleton<IConnectionMultiplexer>(provider => ConnectionMultiplexer.Connect(connectionString));
+
+            services.AddSingleton<IDatabase>(provider =>
+            {
+                var multiplexer = provider.GetRequiredService<IConnectionMultiplexer>();
+                return multiplexer.GetDatabase();
+            });
+            services.AddSingleton<ICacheService, RedisService>();
+
+            return services;
+        }
+
         /// <summary>
         /// Dependency injection for MediatR with assemblies
         /// example:
@@ -82,12 +101,13 @@ namespace IcTest.Infrastructure.Extensions
         public static IServiceCollection AddCryptoDatabaseServices(this IServiceCollection services, IConfiguration configuration)
         {
             // Configure Npgsql to enable dynamic JSON serialization
-            var connectionString = configuration.GetConnectionString("CryptoDatabase");
+            string connectionString = configuration.GetConnectionString("CryptoDatabase") ?? throw new InvalidOperationException("CryptoDatabase connection string is not configured.");
             // Add services to the container.
             services.AddScoped<ISaveChangesInterceptor, TimestampEntityInterceptor>();
             services.AddScoped<ICryptoDbContext, CryptoDbContext>();
+            //Repositories
             services.AddScoped<ICryptoRepositoryManager, CryptoRepositoryManager>();
-
+            
             // Configure the DbContext with Npgsql and custom settings
             NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
             dataSourceBuilder.UseJsonNet();

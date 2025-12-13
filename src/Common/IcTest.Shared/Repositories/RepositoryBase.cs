@@ -1,25 +1,15 @@
-﻿using IcTest.Shared.Repositories.Contacts;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using IcTest.Shared.ApiResponses;
+﻿using IcTest.Shared.ApiResponses;
+using IcTest.Shared.Repositories.Contacts;
 using Mapster;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace IcTest.Shared.Repositories
 {
-    public abstract class RepositoryBase<T, TC> : IRepositoryBase<T> where T : class
+    public abstract class RepositoryBase<T, TC>(TC repositoryContext) : IRepositoryBase<T> where T : class
                                                                      where TC : DbContext
     {
-        protected TC RepositoryContext;
-        public RepositoryBase(TC repositoryContext)
-        {
-            RepositoryContext = repositoryContext;
-        }
+        protected TC RepositoryContext = repositoryContext;
         #region Query Methods
         public IQueryable<T> FindAll(bool trackChanges)
         {
@@ -99,7 +89,7 @@ namespace IcTest.Shared.Repositories
             int totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
             List<T> payload = await GetPagedListAsync(query, pageNumber, pageSize, cnt);
             List<TDto> dtoList = payload.Adapt<List<TDto>>();
-            return new PaginatedResult<TDto>(pageNumber, pageSize, totalPages, dtoList);
+            return new PaginatedResult<TDto>(pageNumber, pageSize, totalRecords, dtoList);
         }
         #endregion
     }

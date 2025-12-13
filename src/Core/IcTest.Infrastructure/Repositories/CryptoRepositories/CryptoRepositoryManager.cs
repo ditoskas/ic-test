@@ -1,4 +1,6 @@
 ﻿using IcTest.Infrastructure.Repositories.CryptoRepositories.Contacts;
+using IcTest.Infrastructure.Repositories.CryptoRepositories.Decorators;
+using IcTest.Infrastructure.Services.Cache;
 
 namespace IcTest.Infrastructure.Repositories.CryptoRepositories
 {
@@ -10,11 +12,11 @@ namespace IcTest.Infrastructure.Repositories.CryptoRepositories
         private readonly Lazy<IBlockHashRepository> _blockHashRepository;
         private readonly Lazy<IBlockTransactionRepository> _blockTransactionRepository;
         #endregion
-        public CryptoRepositoryManager(CryptoDbContext cryptoDbContext)
+        public CryptoRepositoryManager(ICacheService cacheService, CryptoDbContext cryptoDbContext)
         {
             CryptoDbContext = cryptoDbContext;
             _blockChainRepository = new Lazy<IBlockChainRepository>(() => new BlockChainRepository(CryptoDbContext));
-            _blockHashRepository = new Lazy<IBlockHashRepository>(() => new BlockHashRepository(CryptoDbContext));
+            _blockHashRepository = new Lazy<IBlockHashRepository>(() => new CachedBlockHashRepository(new BlockHashRepository(CryptoDbContext), cacheService));
             _blockTransactionRepository = new Lazy<IBlockTransactionRepository>(() => new BlockTransactionRepository(CryptoDbContext));
         }
 
