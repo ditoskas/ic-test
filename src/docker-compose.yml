@@ -17,7 +17,12 @@ services:
   blocks.redis:
     image: redis:7-alpine
 
+  ictest.gateway:
+    image: ${DOCKER_REGISTRY-}ictestgateway
+    build:
+      context: .
+      dockerfile: ApiGateways/IcTest.Gateway/Dockerfile
+
 volumes:
   blocks_db:
   blocks_redis:
-

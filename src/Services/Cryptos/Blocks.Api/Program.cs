@@ -27,7 +27,7 @@ var app = builder.Build();
 
 app.UseSwaggerPipeline();
 app.UseCors("AllowAll");
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection(); disable to make the reverse proxy to work on http
 app.UseHealthChecks("/health",
     new HealthCheckOptions
     {

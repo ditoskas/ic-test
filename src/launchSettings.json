@@ -5,7 +5,8 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "blocks.api": "StartDebugging",
-        "blocks.importer": "StartDebugging"
+        "blocks.importer": "StartDebugging",
+        "ictest.gateway": "StartDebugging"
       }
     }
   }

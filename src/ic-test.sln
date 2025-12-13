@@ -39,6 +39,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryManager.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blocks.Importer", "Services\Cryptos\Blocks.Importer\Blocks.Importer.csproj", "{48153FBE-3519-4B6C-A18C-7E5913F72226}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{C5331310-C2FF-4FBC-9A8C-72B95A1CF1B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IcTest.Gateway", "ApiGateways\IcTest.Gateway\IcTest.Gateway.csproj", "{934C1C66-782D-4840-8FAE-FD34F6D143C5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,6 +93,10 @@ Global
 		{48153FBE-3519-4B6C-A18C-7E5913F72226}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48153FBE-3519-4B6C-A18C-7E5913F72226}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48153FBE-3519-4B6C-A18C-7E5913F72226}.Release|Any CPU.Build.0 = Release|Any CPU
+		{934C1C66-782D-4840-8FAE-FD34F6D143C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{934C1C66-782D-4840-8FAE-FD34F6D143C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{934C1C66-782D-4840-8FAE-FD34F6D143C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{934C1C66-782D-4840-8FAE-FD34F6D143C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,6 +114,7 @@ Global
 		{E0C9C26F-ADFE-4291-9CF0-32B701EE5CD8} = {A10344D9-9816-4032-B622-F47086E6933F}
 		{A2B6F348-E7A9-605B-70E4-22F551815124} = {B5FEB6B0-9CF5-4C9E-A020-7A702282EE2B}
 		{48153FBE-3519-4B6C-A18C-7E5913F72226} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{934C1C66-782D-4840-8FAE-FD34F6D143C5} = {C5331310-C2FF-4FBC-9A8C-72B95A1CF1B6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9C8268AA-19BC-48CA-86C9-E2FD6C99B16A}

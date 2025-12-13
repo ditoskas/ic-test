@@ -11,8 +11,8 @@ builder.Services.AddSystemHealthChecks(builder.Configuration);
 builder.Services.RegisterCustomMapsterConfiguration();
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-app.UseHttpsRedirection();
+// Configure the HTTP request pipeline. 
+//app.UseHttpsRedirection(); disable to make the reverse proxy to work on http
 app.UseHealthChecks("/health",
     new HealthCheckOptions
     {
