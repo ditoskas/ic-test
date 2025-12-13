@@ -15,7 +15,7 @@ namespace IcTest.Infrastructure.Repositories.CryptoRepositories
         public CryptoRepositoryManager(ICacheService cacheService, CryptoDbContext cryptoDbContext)
         {
             CryptoDbContext = cryptoDbContext;
-            _blockChainRepository = new Lazy<IBlockChainRepository>(() => new BlockChainRepository(CryptoDbContext));
+            _blockChainRepository = new Lazy<IBlockChainRepository>(() => new CachedBlockChainRepository(new BlockChainRepository(CryptoDbContext), cacheService));
             _blockHashRepository = new Lazy<IBlockHashRepository>(() => new CachedBlockHashRepository(new BlockHashRepository(CryptoDbContext), cacheService));
             _blockTransactionRepository = new Lazy<IBlockTransactionRepository>(() => new BlockTransactionRepository(CryptoDbContext));
         }
