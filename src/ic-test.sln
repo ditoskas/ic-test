@@ -43,6 +43,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IcTest.Gateway", "ApiGateways\IcTest.Gateway\IcTest.Gateway.csproj", "{934C1C66-782D-4840-8FAE-FD34F6D143C5}"
 EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "blocks.web", "Services\Cryptos\Blocks.Web\blocks.web.esproj", "{BDC43A23-89C1-F8D5-AD18-1275BFF9BFD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,12 @@ Global
 		{934C1C66-782D-4840-8FAE-FD34F6D143C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{934C1C66-782D-4840-8FAE-FD34F6D143C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{934C1C66-782D-4840-8FAE-FD34F6D143C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDC43A23-89C1-F8D5-AD18-1275BFF9BFD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDC43A23-89C1-F8D5-AD18-1275BFF9BFD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDC43A23-89C1-F8D5-AD18-1275BFF9BFD3}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{BDC43A23-89C1-F8D5-AD18-1275BFF9BFD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDC43A23-89C1-F8D5-AD18-1275BFF9BFD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDC43A23-89C1-F8D5-AD18-1275BFF9BFD3}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,6 +123,7 @@ Global
 		{A2B6F348-E7A9-605B-70E4-22F551815124} = {B5FEB6B0-9CF5-4C9E-A020-7A702282EE2B}
 		{48153FBE-3519-4B6C-A18C-7E5913F72226} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{934C1C66-782D-4840-8FAE-FD34F6D143C5} = {C5331310-C2FF-4FBC-9A8C-72B95A1CF1B6}
+		{BDC43A23-89C1-F8D5-AD18-1275BFF9BFD3} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9C8268AA-19BC-48CA-86C9-E2FD6C99B16A}
