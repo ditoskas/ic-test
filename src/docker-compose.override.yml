@@ -70,3 +70,11 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  blocks.web:
+    environment:
+      - VITE_API_URL=https://localhost:6071
+    ports:
+      - "6081:80"
+    depends_on:
+      - ictest.gateway
