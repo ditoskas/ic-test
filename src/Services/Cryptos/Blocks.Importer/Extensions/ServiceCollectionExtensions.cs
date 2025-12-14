@@ -19,7 +19,8 @@ namespace Blocks.Importer.Extensions
             BlockCypherConfig blockCypherConfig = configuration.GetSection("BlockCypher").Get<BlockCypherConfig>()!;
             services.AddBlockCypherServices(blockCypherConfig);
             //Background Services
-            services.AddHostedService<BlocksImporterService>();
+            services.AddSingleton<BlocksImporterService>();
+            services.AddHostedService(sp => sp.GetRequiredService<BlocksImporterService>());
             return services;
         }
 
@@ -32,7 +33,7 @@ namespace Blocks.Importer.Extensions
                     nameof(BlocksImporterService),
                     sp =>
                     {
-                        var service = sp.GetRequiredService<IBlocksImporterService>();
+                        var service = sp.GetRequiredService<BlocksImporterService>();
                         return new BackgroundServiceHealthCheck(service.Status);
                     },
                     HealthStatus.Unhealthy,
