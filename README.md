@@ -20,9 +20,8 @@ The application is using
 11. Use of Mapster
 12. Pagination
 13. Background Hosted Services
+14. Gateway
 
-
-## API Endpoints
 
 ## How to run
 1. Make sure that docker is running
