@@ -1,0 +1,6 @@
+@Blocks.Importer_HostAddress = http://localhost:5133
+
+GET {{Blocks.Importer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
