@@ -1,17 +1,24 @@
 import { Pagination } from "react-bootstrap";
-import type {JSX} from "react";
+import React, {type JSX} from "react";
+import {useBlocks} from "../../../contexts/BlocksContext/BlocksContext.tsx";
 
 interface BlockHashPaginatorProps {
     totalPages: number;
-    currentPage: number;
 }
 
 
-export default function BlockHashPaginator({ totalPages, currentPage }: BlockHashPaginatorProps) {
+export default function BlockHashPaginator({ totalPages }: BlockHashPaginatorProps) {
+    const { selectedPage, setSelectedPage } = useBlocks();
+
+    function onPageItemClickHandler(e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
+        e.preventDefault();
+        const pageNumber = Number(e.currentTarget.text);
+        setSelectedPage(pageNumber);
+    }
     const items: JSX.Element[] = [];
     for (let number = 1; number <= totalPages; number++) {
         items.push(
-            <Pagination.Item key={number} active={number === currentPage}>
+            <Pagination.Item key={number} active={number === selectedPage} onClick={onPageItemClickHandler}>
                 {number}
             </Pagination.Item>,
         );

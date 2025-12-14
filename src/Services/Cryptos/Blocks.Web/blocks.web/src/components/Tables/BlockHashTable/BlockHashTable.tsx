@@ -1,5 +1,6 @@
 import type {BlockTransaction, PagedResponse} from "../../../types";
 import BlockHashPaginator from "./BlockHashPaginator.tsx";
+import BlockHashPageSizer from "./BlockHashPageSizer.tsx";
 
 
 interface BlockHashTableProps {
@@ -13,9 +14,12 @@ export default function BlockHashTable({ pageInfo }: BlockHashTableProps) {
 
     return (
         <>
+            <BlockHashPageSizer />
+            <div style={{ maxHeight: "500px", overflowY: "auto" }}>
             <table className="table table-striped table-hover">
                 <thead>
                 <tr>
+                    <th scope="col">Id</th>
                     <th scope="col">Chain</th>
                     <th scope="col">Hash</th>
                     <th scope="col">Received Time</th>
@@ -25,6 +29,7 @@ export default function BlockHashTable({ pageInfo }: BlockHashTableProps) {
                 <tbody>
                 {pageInfo.payload.data.map(block => (
                     <tr key={block.id}>
+                        <td>{block.id}</td>
                         <td>{block.chain}</td>
                         <td>{block.hash}</td>
                         <td>{block.receivedTime}</td>
@@ -33,7 +38,8 @@ export default function BlockHashTable({ pageInfo }: BlockHashTableProps) {
                 ))}
                 </tbody>
             </table>
-            <BlockHashPaginator totalPages={pageInfo.payload?.totalPages} currentPage={pageInfo.payload?.pageNumber} />
+            </div>
+            <BlockHashPaginator totalPages={pageInfo.payload?.totalPages} />
         </>
     );
 }

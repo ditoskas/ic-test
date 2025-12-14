@@ -23,6 +23,12 @@ services:
       context: .
       dockerfile: ApiGateways/IcTest.Gateway/Dockerfile
 
+  blocks.web:
+    image: ${DOCKER_REGISTRY-}blocksweb
+    build:
+      context: .
+      dockerfile: Services/Cryptos/Blocks.Web/blocks.web/Dockerfile
+
 volumes:
   blocks_db:
   blocks_redis:

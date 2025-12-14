@@ -1,32 +1,31 @@
 import { Form, InputGroup } from "react-bootstrap";
 import React, { useEffect } from "react";
-import type { Chain } from "../../../types";
 
-interface ChainSelectInputProps {
-    chains: Chain[];
-    onChainChange?: (chain: Chain | null) => void;
-}
+import {useBlocks} from "../../../contexts/BlocksContext/BlocksContext.tsx";
 
-export default function ChainSelect({ chains, onChainChange }: ChainSelectInputProps) {
+
+export default function ChainSelect() {
+    const { blockChains, setSelectedChainId, selectedChainId} = useBlocks();
     useEffect(() => {
-        if (chains.length > 0 && onChainChange) {
-            onChainChange(chains[0]);
+        if (blockChains.length > 0 && selectedChainId === null) {
+            setSelectedChainId(blockChains[0].id);
         }
-    }, [chains, onChainChange]);
+    }, [blockChains, selectedChainId, setSelectedChainId]);
 
     function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
         const id = Number(e.target.value);
-        const selected = chains.find(c => c.id === id) ?? null;
-        if (onChainChange) {
-            onChainChange(selected);
+        const selected = blockChains.find(c => c.id === id) ?? null;
+        if (!selected) {
+            return;
         }
+        setSelectedChainId(id);
     }
     return (
         <Form>
             <InputGroup>
                 <InputGroup.Text id="basic-addon1">Select BlockChain</InputGroup.Text>
                 <select className="form-select" aria-label="Select blockchain" onChange={handleChange}>
-                    {chains.map(chain => (
+                    {blockChains.map(chain => (
                         <option key={chain.id} value={chain.id}>
                             {chain.name}
                         </option>
