@@ -39,6 +39,14 @@ app.MapCarter();
 app.UseExceptionHandler(options => { });
 
 //Initialise Database
-await app.InitialiseDatabaseAsync();
+try 
+{
+    app.Logger.LogInformation("Starting database initialisation...");
+    await app.InitialiseDatabaseAsync();
+}
+catch (Exception ex)
+{
+    app.Logger.LogError(ex, "An error occurred during database initialisation.");
+}
 
 app.Run();
